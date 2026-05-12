@@ -49,5 +49,5 @@ def calculate(nums):
 
 try:
     result = divide(10, 0)
-except:  # Bare except (catches everything including KeyboardInterrupt)
+except Exception as e:
     pass
