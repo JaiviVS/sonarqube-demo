@@ -18,13 +18,13 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh '''
-                        sonar-scanner \
-                        -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                        -Dsonar.organization=${SONAR_ORG} \
-                        -Dsonar.sources=. \
+                    bat """
+                        sonar-scanner ^
+                        -Dsonar.projectKey=%SONAR_PROJECT_KEY% ^
+                        -Dsonar.organization=%SONAR_ORG% ^
+                        -Dsonar.sources=. ^
                         -Dsonar.host.url=https://sonarcloud.io
-                    '''
+                    """
                 }
             }
         }
@@ -40,7 +40,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE}:${BUILD_NUMBER}")
+                    bat "docker build -t %DOCKER_IMAGE%:%BUILD_NUMBER% ."
                     echo "Docker image built successfully!"
                 }
             }
